@@ -68,7 +68,7 @@ const SignUP = () => {
     <>
       <Navbar expand="lg" className="rounded-4 mt-lg-2 mx-lg-1 rounded-sm-0 mt-md-1 mx-sm-0">
         <Navbar.Brand href="/" className="mx-auto">
-          <img src={soloLogo1} height={30} alt='logo' />
+          <img src={soloLogo1} height={50} alt='logo' />
           <span className="align-self-center ms-2">SOLOPRO</span>
         </Navbar.Brand>
       </Navbar>
