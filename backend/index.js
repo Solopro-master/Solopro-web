@@ -25,7 +25,9 @@ app.use(cors()); // Enable CORS for all routes
 connectDB()
     .then(() => {
         console.log('MongoDB connection established');
-
+        app.get('/', (req, res) => {
+            res.send('Welcome to the API');
+        });
         // Define Routes for first project
         app.get('/getmentors', mentorController.getAllMentors);
         app.get('/getinvestors',investorController.getAllInvestors)
