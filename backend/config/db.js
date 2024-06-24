@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb");
 
-const url = "mongodb://localhost:27017";
+const url = "mongodb+srv://adhi:1234@db.usshl9s.mongodb.net/";
 const dbName = "solopro";
 
 let dbClient;
