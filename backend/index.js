@@ -1,18 +1,20 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const connectDB = require('./config/db'); // Ensure this points to the correct path of your db connection file
+const { connectDB } = require('./config/db'); // Destructure to get connectDB function
+const { errorHandler } = require('./middleware/errorHandler');
 
+// Import required route files
 const mentorController = require('./controllers/mentorController');
-const studentController = require('./controllers/studentController');
 const meetingController = require('./controllers/meetingController');
 const blogRoutes = require('./routes/blogs');
 const featuredStoryRoutes = require('./routes/featuredStories');
 const moreStoryRoutes = require('./routes/moreStories');
-const { errorHandler } = require('./middleware/errorHandler');
-
+const userRoutes = require('./routes/userRoutes');
+const loginRoutes = require('./routes/loginRoutes');
+const studentController=require('./controllers/studentController');
+const investorController =  require('./controllers/investorController');
 dotenv.config();
-
 const app = express();
 
 // Init Middleware
@@ -26,22 +28,36 @@ connectDB()
 
         // Define Routes for first project
         app.get('/getmentors', mentorController.getAllMentors);
-        app.post('/getmentor', mentorController.getAppointmentById);
-        app.post('/getstudent', studentController.getStudentById);
+        app.get('/getinvestors',investorController.getAllInvestors)
+        app.post('/getInvestor', investorController.getInvestorById);
+        app.post('/getMentor', mentorController.getmentortById);
+        app.post("/getstudent", studentController.getStudentById);
         app.post('/schedulemeeting', meetingController.scheduleMeeting);
         app.post('/getmeetingstu', meetingController.getMeetingByStudentId);
+        app.post('/updatestudent',studentController.updateStudent);
+        app.post('/student/getprofileimg',studentController.getprofileimg);
         app.post('/getappointments', meetingController.getAppointmentsByMentorId);
         app.post('/updatestatus', meetingController.updateAppointmentStatus);
 
+
+        app.post('/Mentor/getprofileimg',mentorController.getprofileimg);
+        app.post('/Investor/getprofileimg',investorController.getprofileimg);
         // Define Routes for second project
         app.use('/api/blogs', blogRoutes);
         app.use('/api/featuredStories', featuredStoryRoutes);
+  app.post('/updatementor',mentorController.updateMentor);
+        app.post('/updateinvestor',investorController.updateInvestor)
+        
         app.use('/api/moreStories', moreStoryRoutes);
+
+        // Define Routes for users and login
+        app.use('/api/signup', userRoutes);
+        app.use('/api/login', loginRoutes);
 
         // Error Handler Middleware
         app.use(errorHandler);
 
-        const PORT = process.env.PORT || 5000;
+        const PORT = process.env.PORT || 3001;
         app.listen(PORT, () => {
             console.log(`Server started on port ${PORT}`);
         });
